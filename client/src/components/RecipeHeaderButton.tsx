@@ -19,7 +19,7 @@ export const RecipeHeaderButton = ({navigation, item}: any) => {
             <TouchableOpacity>
                 <FontAwesomeIcon
                     name={item?.isBookmark ? "bookmark" : "bookmark-o"}
-                    color={"#35ac72"}
+                    color={"#40916c"}
                     size={30}/>
             </TouchableOpacity>
         </View>

@@ -1,18 +1,18 @@
-import images from "./images"
-import  icons  from "./icons"
+import images from "./images";
+import icons from "./icons";
 
 export const data = [
     {
         id: 1,
         name: "Spaghetti With Shrimp Sauce",
         image: images.spagetti,
-        duration: 30,
+        duration: "30 mins",
         serving: 1,
         isBookmark: false,
         category: "Pasta",
         author: {
             profilePic: images.UserProfile5,
-            name: "Maria",
+            name: "Maria"
         },
         ingredients: [
             {
@@ -50,7 +50,7 @@ export const data = [
                 icon: icons.pepper,
                 description: "Black Pepper",
                 quantity: "¼ tbsp"
-            },
+            }
 
         ],
         viewers: [
@@ -82,7 +82,7 @@ export const data = [
         category: "Local",
         author: {
             profilePic: images.UserProfile8,
-            name: "Mandy",
+            name: "Mandy"
         },
         ingredients: [
             {
@@ -114,7 +114,7 @@ export const data = [
                 icon: icons.coriander,
                 description: "Coriander",
                 quantity: "1 tsp"
-            },
+            }
 
         ],
         viewers: [
@@ -150,7 +150,7 @@ export const data = [
         category: "Local",
         author: {
             profilePic: images.UserProfile9,
-            name: "Jessie",
+            name: "Jessie"
         },
         ingredients: [
             {
@@ -188,7 +188,7 @@ export const data = [
                 icon: icons.pasta,
                 description: "vermicelli",
                 quantity: "100g"
-            },
+            }
 
 
         ],
@@ -220,7 +220,7 @@ export const data = [
         category: "Local",
         author: {
             profilePic: images.UserProfile7,
-            name: "Ali Baba",
+            name: "Ali Baba"
         },
         ingredients: [
             {
@@ -252,12 +252,10 @@ export const data = [
                 icon: icons.anchovy,
                 description: "Dried anchovies",
                 quantity: "3 cups"
-            },
+            }
 
 
         ],
-        viewers: [
-
-        ]
-    },
-]
+        viewers: []
+    }
+];

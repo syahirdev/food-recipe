@@ -6,6 +6,8 @@ import FeatherIcon from "react-native-vector-icons/Feather";
 // @ts-ignore
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import { RecipeHeader } from "../components/RecipeHeader";
+import { Community } from "../components/Community";
+import { IngredientHeader } from "../components/IngredientHeader";
 
 const initRecipe: RecipeProps = {
     image: "null",
@@ -28,25 +30,27 @@ interface RecipeProps {
 }
 
 export const Recipe = ({navigation, route}: any) => {
-    const [selectedRecipe, setSelectedRecipe] = useState<RecipeProps>(initRecipe);
+    const [item, setItem] = useState<RecipeProps>(initRecipe);
     const scrollY = useRef(new Animated.Value(0)).current;
     useEffect(() => {
         let {recipe} = route.params;
-        setSelectedRecipe(recipe);
+        setItem(recipe);
     }, []);
 
     return (
         <View>
             <Animated.FlatList
-                data={selectedRecipe?.ingredients}
+                data={item?.ingredients}
                 keyExtractor={item => `${item.id}`}
                 showsVerticalScrollIndicator={false}
                 ListHeaderComponent={
                     <>
                         <RecipeHeader
                             navigation={navigation}
-                            item={selectedRecipe}
+                            item={item}
                         />
+                        <Community item={item}/>
+                        <IngredientHeader totalItem={item?.ingredients?.length}/>
                     </>
                 }
                 scrollEventThrottle={16}
@@ -58,6 +62,9 @@ export const Recipe = ({navigation, route}: any) => {
                         <IngredientCard item={item}/>
                     </>
                 )}
+                ListFooterComponent={
+                    <View style={{marginBottom: 10}}/>
+                }
             />
         </View>
     );

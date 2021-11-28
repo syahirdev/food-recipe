@@ -72,10 +72,9 @@ export const Home = ({navigation}: any) => {
                     showsHorizontalScrollIndicator={false}
                     keyExtractor={item => `${item.id}`}
                     renderItem={({item}) => (
-                        // TODO: navigate to trending recipe page
                         <TrendingCard
                             item={item}
-                            onPress={() => console.log("TODO: navigate to trending recipe page")}
+                            onPress={() => navigation.navigate("Recipe", {recipe: item})}
                         />
                     )}
                 />
@@ -115,7 +114,7 @@ export const Home = ({navigation}: any) => {
                     />
                 )}
                 ListFooterComponent={
-                    <View style={styles.footer}/>
+                    <View style={{marginBottom: 10}}/>
                 }
                 keyboardDismissMode={"on-drag"}
                 showsVerticalScrollIndicator={false}
@@ -213,8 +212,5 @@ const styles = StyleSheet.create({
     },
     viewAllText: {
         marginRight: 5
-    },
-    footer: {
-        marginBottom: 10
     }
 });
