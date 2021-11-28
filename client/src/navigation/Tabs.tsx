@@ -7,11 +7,14 @@ const Tab = createBottomTabNavigator();
 
 export const Tabs = () => {
     return (
-        <Tab.Navigator tabBarOptions={{showLabel: false}}>
+        <Tab.Navigator tabBarOptions={{
+            showLabel: false
+        }}>
             <Tab.Screen
                 name={"Home"}
                 component={Home}
                 options={{
+                    headerShown: false,
                     tabBarIcon: ({focused}) => (
                         <TabIcon
                             icon={"home"}
@@ -23,6 +26,7 @@ export const Tabs = () => {
                 name={"Search"}
                 component={Home}
                 options={{
+                    headerShown: false,
                     tabBarIcon: ({focused}) => (
                         <TabIcon
                             icon={"search"}
@@ -34,6 +38,7 @@ export const Tabs = () => {
                 name={"Bookmark"}
                 component={Home}
                 options={{
+                    headerShown: false,
                     tabBarIcon: ({focused}) => (
                         <TabIcon
                             icon={"bookmark"}
@@ -45,6 +50,7 @@ export const Tabs = () => {
                 name={"Settings"}
                 component={Home}
                 options={{
+                    headerShown: false,
                     tabBarIcon: ({focused}) => (
                         <TabIcon
                             icon={"settings"}
