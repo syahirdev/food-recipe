@@ -6,7 +6,9 @@ import { TabIcon } from "../components/TabIcon";
 const Tab = createBottomTabNavigator();
 
 export const Tabs = () => {
+
     return (
+        // @ts-ignore
         <Tab.Navigator tabBarOptions={{
             showLabel: false
         }}>

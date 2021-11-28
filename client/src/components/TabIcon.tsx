@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
+// @ts-ignore
 import Icon from "react-native-vector-icons/Feather";
 
 interface Props {
