@@ -4,6 +4,7 @@ import { Home } from "../screens/Home";
 import { TabIcon } from "../components/TabIcon";
 import { Search } from "../screens/Search";
 import { Bookmark } from "../screens/Bookmark";
+import { AddRecipe } from "../screens/AddRecipe";
 
 const Tab = createBottomTabNavigator();
 
@@ -34,6 +35,18 @@ export const Tabs = () => {
                     tabBarIcon: ({focused}) => (
                         <TabIcon
                             icon={"search"}
+                            focused={focused}/>
+                    )
+                }}
+            />
+            <Tab.Screen
+                name={"Add"}
+                component={AddRecipe}
+                options={{
+                    headerShown: false,
+                    tabBarIcon: ({focused}) => (
+                        <TabIcon
+                            icon={"plus"}
                             focused={focused}/>
                     )
                 }}

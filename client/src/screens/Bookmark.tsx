@@ -1,13 +1,12 @@
 import React from "react";
-import { FlatList, StyleSheet, View } from "react-native";
-import { SIZE } from "../constants";
+import { FlatList, View } from "react-native";
 import { HeaderTitle } from "../components/HeaderTitle";
 import { CategoryCard } from "../components/CategoryCard";
 import { data } from "../assets/data";
 
 export const Bookmark = ({navigation}: any) => {
     return (
-        <View style={styles.container}>
+        <View>
             <HeaderTitle title={"Bookmark"}/>
             <FlatList
                 data={data}
@@ -29,9 +28,3 @@ export const Bookmark = ({navigation}: any) => {
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        marginTop: SIZE.sm
-    }
-});

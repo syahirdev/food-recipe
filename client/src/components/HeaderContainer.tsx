@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     headerSubtitle: {
-        color: "gray",
+        color: COLORS.lightGray,
         fontSize: 16
     },
     profileImg: {

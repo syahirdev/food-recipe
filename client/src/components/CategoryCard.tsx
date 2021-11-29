@@ -3,6 +3,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { COLORS, SIZE } from "../constants";
 // @ts-ignore
 import Icon from "react-native-vector-icons/Feather";
+// @ts-ignore
 import FAIcon from "react-native-vector-icons/FontAwesome";
 
 export const CategoryCard = ({item, onPress}: any) => {

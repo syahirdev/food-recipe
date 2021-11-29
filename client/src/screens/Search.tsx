@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import { SearchContainer } from "../components/SearchContainer";
 import { CategoryCard } from "../components/CategoryCard";
@@ -11,7 +11,9 @@ export const Search = ({navigation}: any) => {
 
     const HandleSearch = (e: string) => {
         const filteredData = itemList.filter(item => item.name.toLowerCase().indexOf(e.toLowerCase()) !== -1);
-        if (filteredData) setFilteredItemList(filteredData);
+        if (filteredData) { // @ts-ignore
+            setFilteredItemList(filteredData);
+        }
     };
 
     return (

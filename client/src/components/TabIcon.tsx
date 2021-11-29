@@ -11,8 +11,8 @@ interface Props {
 export const TabIcon = ({focused, icon}: Props) => {
     return (
         <View style={styles.container}>
-            <Icon name={icon} size={25} style={[styles.icon, focused && styles.iconActive]}/>
-            {focused && <View style={styles.borderActive}/>}
+            <Icon name={icon} size={focused ? 30 : 25} style={[styles.icon, focused && styles.iconActive]}/>
+            {/*{focused && <View style={styles.borderActive}/>}*/}
         </View>
     );
 };

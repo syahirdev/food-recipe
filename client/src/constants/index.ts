@@ -17,7 +17,7 @@ export const COLORS = {
     silver: "#bdc3c7",
     lightGray: "#95a5a6",
     gray: "#7f8c8d",
-    light: "#efefef"
+    light: "#f5f5f5"
 };
 
 export const SIZE = {
