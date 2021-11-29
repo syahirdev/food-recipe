@@ -3,6 +3,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { COLORS, SIZE } from "../constants";
 // @ts-ignore
 import Icon from "react-native-vector-icons/Feather";
+import FAIcon from "react-native-vector-icons/FontAwesome";
 
 export const CategoryCard = ({item, onPress}: any) => {
     return (
@@ -19,6 +20,9 @@ export const CategoryCard = ({item, onPress}: any) => {
                 <Text style={styles.bodyFooterText}>
                     <Icon name={"clock"}/> {item.duration} | {item.serving} Servings <Icon name={"users"}/>
                 </Text>
+            </View>
+            <View style={styles.bookmark}>
+                <FAIcon name={item.isBookmark ? "bookmark" : "bookmark-o"} size={20} color={COLORS.green}/>
             </View>
         </TouchableOpacity>
     );
@@ -59,5 +63,10 @@ const styles = StyleSheet.create({
     bodyFooterText: {
         fontSize: 14,
         color: COLORS.gray
+    },
+    bookmark: {
+        alignSelf: "flex-start",
+        left: -15,
+        top: 5
     }
 });

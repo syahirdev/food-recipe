@@ -12,12 +12,14 @@ export const Bookmark = ({navigation}: any) => {
             <FlatList
                 data={data}
                 keyExtractor={item => `${item.id}`}
-                renderItem={({item}) => (
-                    <CategoryCard
-                        item={item}
-                        onPress={() => navigation.navigate("Recipe", {recipe: item})}
-                    />
-                )}
+                renderItem={({item}) => {
+                    if (item.isBookmark) return (
+                        <CategoryCard
+                            item={item}
+                            onPress={() => navigation.navigate("Recipe", {recipe: item})}
+                        />
+                    );
+                }}
                 ListFooterComponent={
                     <View style={{marginBottom: 50}}/>
                 }
