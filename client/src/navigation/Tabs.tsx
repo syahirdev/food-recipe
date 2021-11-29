@@ -2,6 +2,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Home } from "../screens/Home";
 import { TabIcon } from "../components/TabIcon";
+import { Search } from "../screens/Search";
 
 const Tab = createBottomTabNavigator();
 
@@ -26,7 +27,7 @@ export const Tabs = () => {
             />
             <Tab.Screen
                 name={"Search"}
-                component={Home}
+                component={Search}
                 options={{
                     headerShown: false,
                     tabBarIcon: ({focused}) => (
