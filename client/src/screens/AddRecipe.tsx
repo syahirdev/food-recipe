@@ -6,6 +6,7 @@ import Icon from "react-native-vector-icons/Feather";
 import { IngredientContainer } from "../components/IngredientContainer";
 import { AddIngredientButton } from "../components/AddIngredientButton";
 import { RecipeMedia } from "../components/RecipeMedia";
+import { launchImageLibrary } from "react-native-image-picker";
 
 export const AddRecipe = ({navigation}: any) => {
     const [ingredientList, setIngredientList] = useState([
@@ -13,6 +14,7 @@ export const AddRecipe = ({navigation}: any) => {
         {name: "", amount: ""},
         {name: "", amount: ""}
     ]);
+    const [document, setDocument] = useState();
 
     const HandleChange = (name: string, value: string, index: number) => {
         const list = [...ingredientList];
@@ -32,6 +34,31 @@ export const AddRecipe = ({navigation}: any) => {
     const HandleAdd = () => {
         setIngredientList([...ingredientList, {name: "", amount: ""}]);
     };
+
+    const HandleUpload = () => {
+        const options = {
+            mediaType: "photo",
+            storageOptions: {
+                skipBackup: true,
+                path: "images"
+            }
+        };
+        launchImageLibrary(options, (response) => {
+            console.log("Response = ", response);
+
+            if (response.didCancel) {
+                console.log("User cancelled image picker");
+            } else if (response.errorMessage) {
+                console.log("ImagePicker Error: ", response.errorMessage);
+            } else {
+                setDocument(response.assets[0]);
+            }
+        });
+    };
+
+    const HandleCancel = () => {
+        setDocument(null);
+    }
 
     return (
         <ScrollView style={styles.container}>
@@ -62,7 +89,7 @@ export const AddRecipe = ({navigation}: any) => {
                 <AddIngredientButton onPress={HandleAdd}/>
 
                 <Text style={styles.subtitle}>Add Media</Text>
-                <RecipeMedia/>
+                <RecipeMedia onPress={HandleUpload} onPressCancel={HandleCancel} document={document}/>
             </View>
         </ScrollView>
     );
@@ -93,5 +120,9 @@ const styles = StyleSheet.create({
     titleInput: {
         color: COLORS.green,
         fontSize: SIZE.h2
+    },
+    mediaImg: {
+        width: 50,
+        height: 50
     }
 });

@@ -2,6 +2,7 @@ import React from "react";
 import { ImageBackground, StatusBar, StyleSheet, Text, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { Button } from "../components/Button";
+import { COLORS } from "../constants";
 
 export const Login = ({navigation}: any) => {
 
@@ -36,7 +37,7 @@ export const Login = ({navigation}: any) => {
                 <View style={styles.buttonContainer}>
                     <Button
                         text={"Login"}
-                        colors={["#52b788", "#86ecad"]}
+                        colors={[COLORS.green, "#30bf6b"]}
                         onPress={() => navigation.replace("Home")}
                     />
                     <Button
