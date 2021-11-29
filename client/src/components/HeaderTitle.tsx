@@ -1,6 +1,8 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { COLORS, SIZE } from "../constants";
+// @ts-ignore
+import Icon from "react-native-vector-icons/Feather";
 
 interface HeaderTitleProps {
     title: string
@@ -17,11 +19,12 @@ export const HeaderTitle = ({title}: HeaderTitleProps) => {
 const styles = StyleSheet.create({
     container: {
         marginHorizontal: SIZE.large,
-        marginVertical: SIZE.xxl
+        marginTop: SIZE.xxl,
+        marginBottom: SIZE.sm
     },
     text: {
         color: COLORS.black,
-        fontSize: 18,
-        fontWeight: "500"
+        fontSize: 30,
+        fontWeight: "bold"
     }
 });
