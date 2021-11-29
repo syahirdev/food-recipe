@@ -3,10 +3,11 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import images from "../assets/images";
 // @ts-ignore
 import Icon from "react-native-vector-icons/Feather";
+import { COLORS, SIZE } from "../constants";
 
 export const RecipeNotTriedContainer = () => {
     return (
-        <View style={styles.recipe}>
+        <View style={styles.container}>
             <Image
                 source={images.recipe}
                 style={styles.recipeImg}
@@ -26,15 +27,16 @@ export const RecipeNotTriedContainer = () => {
 };
 
 const styles = StyleSheet.create({
-    recipe: {
+    container: {
         flexDirection: "row",
-        marginTop: 10,
         backgroundColor: "#e0f3e0",
         borderColor: "#cde9cd",
         borderWidth: 1,
         borderRadius: 10,
+        marginTop: 10,
         paddingTop: 10,
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
+        marginHorizontal: SIZE.large
     },
     recipeImg: {
         width: 80,
@@ -46,7 +48,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between"
     },
     recipeText: {
-        color: "#212121",
+        color: COLORS.black,
         fontSize: 14,
         fontWeight: "700"
     },
@@ -57,7 +59,7 @@ const styles = StyleSheet.create({
     },
     recipeLinkText: {
         marginLeft: 5,
-        color: "#49b180",
+        color: COLORS.green,
         fontWeight: "500"
     }
 });

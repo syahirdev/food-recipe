@@ -1,10 +1,11 @@
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import images from "../assets/images";
+import { COLORS, SIZE } from "../constants";
 
 export const HeaderContainer = () => {
     return (
-        <View style={styles.header}>
+        <View style={styles.container}>
             {/*Header*/}
             <View style={{flex: 1}}>
                 <Text style={styles.headerTitle}>Hello, Syahir!</Text>
@@ -22,13 +23,14 @@ export const HeaderContainer = () => {
 };
 
 const styles = StyleSheet.create({
-    header: {
+    container: {
         flexDirection: "row",
         alignItems: "center",
-        height: 80
+        height: 80,
+        marginHorizontal: SIZE.large
     },
     headerTitle: {
-        color: "#49b180",
+        color: COLORS.green,
         fontSize: 24,
         fontWeight: "bold"
     },

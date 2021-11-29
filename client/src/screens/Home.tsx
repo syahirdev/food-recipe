@@ -1,11 +1,9 @@
 import React from "react";
-import { FlatList, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, SafeAreaView, StyleSheet, View } from "react-native";
 import { data } from "../assets/data";
 import { CategoryCard } from "../components/CategoryCard";
-import images from "../assets/images";
 // @ts-ignore
 import Icon from "react-native-vector-icons/Feather";
-import { SearchContainer } from "../components/SearchContainer";
 import { HeaderContainer } from "../components/HeaderContainer";
 import { TrendingContainer } from "../components/TrendingContainer";
 import { RecipeNotTriedContainer } from "../components/RecipeNotTriedContainer";
@@ -21,7 +19,6 @@ export const Home = ({navigation}: any) => {
                 ListHeaderComponent={
                     <>
                         <HeaderContainer/>
-                        <SearchContainer/>
                         <RecipeNotTriedContainer/>
                         <TrendingContainer navigation={navigation}/>
                         <CategoryContainer/>
@@ -34,7 +31,7 @@ export const Home = ({navigation}: any) => {
                     />
                 )}
                 ListFooterComponent={
-                    <View style={{marginBottom: 10}}/>
+                    <View style={{marginBottom: 50}}/>
                 }
                 keyboardDismissMode={"on-drag"}
                 showsVerticalScrollIndicator={false}
@@ -45,7 +42,6 @@ export const Home = ({navigation}: any) => {
 
 const styles = StyleSheet.create({
     container: {
-        marginHorizontal: 15,
         flex: 1
-    },
+    }
 });

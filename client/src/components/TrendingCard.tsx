@@ -2,6 +2,7 @@ import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 // @ts-ignore
 import Icon from "react-native-vector-icons/FontAwesome";
+import { COLORS, SIZE } from "../constants";
 
 export const TrendingCard = ({item, onPress}: any) => {
     return (
@@ -22,7 +23,7 @@ export const TrendingCard = ({item, onPress}: any) => {
                         name={item.isBookmark ? "bookmark" : "bookmark-o"}
                         style={styles.bookmarkIcon}
                         size={20}
-                        color={"#35ac72"}/>
+                        color={COLORS.green}/>
                 </View>
                 <Text style={styles.footerText}>{item.duration} | {item.serving} Serving</Text>
             </View>
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
         height: 250,
         width: 200,
         marginTop: 15,
-        marginRight: 15,
+        marginRight: SIZE.md,
         borderRadius: 15,
         overflow: "hidden",
         position: "relative"
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
         borderRadius: 50
     },
     bodyText: {
-        color: "white",
+        color: COLORS.light,
         fontSize: 16
     },
     footer: {
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between"
     },
     footerTitle: {
-        color: "#e3e3e3",
+        color: COLORS.light,
         fontSize: 18,
         width: "80%"
     },
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
         marginRight: 3
     },
     footerText: {
-        color: "#e3e3e3",
+        color: COLORS.light,
         fontSize: 12
     }
 });

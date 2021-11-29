@@ -1,9 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { SIZE } from "../constants";
 
 export const CategoryContainer = () => {
     return (
-        <View style={styles.category}>
+        <View style={styles.container}>
             <Text style={styles.categoryText}>Category</Text>
             <TouchableOpacity>
                 <Text style={styles.viewAllText}>View All</Text>
@@ -13,10 +14,11 @@ export const CategoryContainer = () => {
 };
 
 const styles = StyleSheet.create({
-    category: {
+    container: {
         flexDirection: "row",
         alignItems: "center",
-        marginTop: 20
+        marginTop: 20,
+        marginHorizontal: SIZE.large
     },
     categoryText: {
         flex: 1,
