@@ -36,7 +36,7 @@ export const Login = ({navigation}: any) => {
                 <View style={styles.buttonContainer}>
                     <Button
                         text={"Login"}
-                        colors={["#52b788", "#76be97"]}
+                        colors={["#52b788", "#86ecad"]}
                         onPress={() => navigation.replace("Home")}
                     />
                     <Button
