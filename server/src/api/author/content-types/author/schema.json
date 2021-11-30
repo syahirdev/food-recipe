@@ -21,6 +21,12 @@
       ],
       "type": "media",
       "multiple": false
+    },
+    "recipe": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::recipe.recipe",
+      "inversedBy": "author"
     }
   }
 }

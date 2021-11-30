@@ -40,6 +40,24 @@
       "allowedTypes": [
         "images"
       ]
+    },
+    "ingredients": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::ingredient.ingredient",
+      "mappedBy": "recipe"
+    },
+    "author": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::author.author",
+      "inversedBy": "recipe"
+    },
+    "viewers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::viewer.viewer",
+      "mappedBy": "recipe"
     }
   }
 }
