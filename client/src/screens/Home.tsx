@@ -17,7 +17,6 @@ export const Home = ({navigation}: any) => {
 
     if (loading) return <Loading/>;
     if (error) return <Error error={error}/>;
-    // console.log(data.recipes.data[0].attributes.name);
 
     return (
         <SafeAreaView style={styles.container}>

@@ -4,6 +4,7 @@ export const GET_ALL_RECIPES = gql`
 {
   recipes {
     data {
+      id
       attributes {
         name
         category
