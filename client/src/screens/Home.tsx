@@ -4,37 +4,25 @@ import { CategoryCard } from "../components/CategoryCard";
 // @ts-ignore
 import Icon from "react-native-vector-icons/Feather";
 import { HeaderContainer } from "../components/HeaderContainer";
-import { TrendingContainer } from "../components/TrendingContainer";
-import { RecipeNotTriedContainer } from "../components/RecipeNotTriedContainer";
-import { CategoryContainer } from "../components/CategoryContainer";
-import { gql, useQuery } from "@apollo/client";
-import { data } from "../assets/data";
+import { useQuery } from "@apollo/client";
 import { Loading } from "../components/Loading";
-
-const GET_ALL_RECIPES = gql`
-{
-  recipes {
-    data {
-      attributes {
-        name
-        category
-        duration
-        serving
-        isBookmark
-      }
-    }
-  }
-}`;
+import { Error } from "../components/Error";
+import { GET_ALL_RECIPES } from "../graphql";
+import { RecipeNotTriedContainer } from "../components/RecipeNotTriedContainer";
+import { TrendingContainer } from "../components/TrendingContainer";
+import { CategoryContainer } from "../components/CategoryContainer";
 
 export const Home = ({navigation}: any) => {
-    const {data: newData, loading, error} = useQuery(GET_ALL_RECIPES);
+    const {data, loading, error} = useQuery(GET_ALL_RECIPES);
 
-    if (loading) return <Loading/>
+    if (loading) return <Loading/>;
+    if (error) return <Error error={error}/>;
+    // console.log(data.recipes.data[0].attributes.name);
 
     return (
         <SafeAreaView style={styles.container}>
             <FlatList
-                data={data}
+                data={data.recipes.data}
                 keyExtractor={item => `${item.id}`}
                 ListHeaderComponent={
                     <>
@@ -46,8 +34,8 @@ export const Home = ({navigation}: any) => {
                 }
                 renderItem={({item}) => (
                     <CategoryCard
-                        item={item}
-                        onPress={() => navigation.navigate("Recipe", {recipe: item})}
+                        item={item.attributes}
+                        onPress={() => navigation.navigate("Recipe", {recipe: item.attributes})}
                     />
                 )}
                 ListFooterComponent={

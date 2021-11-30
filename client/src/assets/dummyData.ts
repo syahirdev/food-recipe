@@ -1,7 +1,7 @@
 import images from "./images";
 import icons from "./icons";
 
-export const data = [
+export const dummyData = [
     {
         id: 1,
         name: "Spaghetti With Shrimp Sauce",

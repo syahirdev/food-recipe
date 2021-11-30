@@ -3,14 +3,21 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 // @ts-ignore
 import FeatherIcon from "react-native-vector-icons/Feather";
 import { RecipeHeaderButton } from "./RecipeHeaderButton";
+import { Loading } from "./Loading";
+import { Error } from "./Error";
+import { env } from "../config";
 
-export const RecipeHeader = ({navigation, item}: any) => {
+export const RecipeHeader = ({navigation, item, loading, error}: any) => {
+
+    if (loading) return <Loading/>;
+    if (error) return <Error error={error}/>;
+
     return (
         <>
             <View style={styles.headerContainer}>
                 <Image
-                    source={item?.image}
-                    resizeMode={"contain"}
+                    source={{uri: env.BASE_URL + item?.image?.data?.attributes?.url}}
+                    resizeMode={"cover"}
                     style={styles.headerImg}
                 />
 
@@ -18,13 +25,13 @@ export const RecipeHeader = ({navigation, item}: any) => {
                     <View style={styles.creatorWrapper}>
                         <Image
                             style={styles.creatorImg}
-                            source={item?.author?.profilePic}
+                            source={{uri: env.BASE_URL + item?.author?.data?.attributes?.image?.data?.attributes?.url}}
                         />
                     </View>
 
                     <View style={styles.labelContainer}>
                         <Text style={styles.labelTitle}>Recipe by:</Text>
-                        <Text style={styles.labelName}>{item?.author?.name}</Text>
+                        <Text style={styles.labelName}>{item?.author?.data?.attributes?.name}</Text>
                     </View>
 
                     <TouchableOpacity style={styles.buttonContainer}>
@@ -42,7 +49,8 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     headerImg: {
-        height: 300
+        height: 300,
+        width: "100%"
     },
     creatorContainer: {
         position: "absolute",

@@ -11,7 +11,7 @@ export const IngredientCard = ({item}: any) => {
                 />
             </View>
             <View style={styles.descContainer}>
-                <Text style={styles.descText}>{item.description}</Text>
+                <Text style={styles.descText}>{item?.name}</Text>
             </View>
             <View style={styles.quantityContainer}>
                 <Text>{item.quantity}</Text>

@@ -5,13 +5,15 @@ import { COLORS, SIZE } from "../constants";
 import Icon from "react-native-vector-icons/Feather";
 // @ts-ignore
 import FAIcon from "react-native-vector-icons/FontAwesome";
+import { env } from "../config";
+import { RecipeServings } from "./RecipeServings";
 
 export const CategoryCard = ({item, onPress}: any) => {
     return (
         <TouchableOpacity style={styles.container} onPress={onPress}>
             {/*Image*/}
             <Image
-                source={item.image}
+                source={{uri: env.BASE_URL + item.image.data.attributes.url}}
                 resizeMode={"cover"}
                 style={styles.image}
             />
@@ -19,7 +21,7 @@ export const CategoryCard = ({item, onPress}: any) => {
             <View style={styles.body}>
                 <Text style={styles.bodyText}>{item.name}</Text>
                 <Text style={styles.bodyFooterText}>
-                    <Icon name={"clock"}/> {item.duration} | {item.serving} Servings <Icon name={"users"}/>
+                    <RecipeServings duration={item.duration} serving={item.serving}/>
                 </Text>
             </View>
             <View style={styles.bookmark}>

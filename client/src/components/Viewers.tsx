@@ -1,5 +1,6 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
+import { env } from "../config";
 
 export const Viewers = ({viewers}: any) => {
     if (viewers?.length === 0) {
@@ -15,7 +16,7 @@ export const Viewers = ({viewers}: any) => {
                     {viewers?.map((viewer: any, index: number) => (
                         <View>
                             <Image
-                                source={viewer.profilePic}
+                                source={{uri: env.BASE_URL + viewer.attributes.image.data.attributes.url}}
                                 style={[styles.profilePic, {
                                     marginLeft: index === 0 ? 0 : -15
                                 }]}
@@ -37,7 +38,7 @@ export const Viewers = ({viewers}: any) => {
                             return (
                                 <View>
                                     <Image
-                                        source={viewer.profilePic}
+                                        source={{uri: env.BASE_URL + viewer.attributes.image.data.attributes.url}}
                                         style={[styles.profilePic, {
                                             marginLeft: index === 0 ? 0 : -15
                                         }]}

@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import { SearchContainer } from "../components/SearchContainer";
 import { CategoryCard } from "../components/CategoryCard";
-import { data } from "../assets/data";
+import { dummyData } from "../assets/dummyData";
 import { SIZE } from "../constants";
 
 export const Search = ({navigation}: any) => {
-    const [itemList, setItemList] = useState(data);
+    const [itemList, setItemList] = useState(dummyData);
     const [filteredItemList, setFilteredItemList] = useState(null);
 
     const HandleSearch = (e: string) => {

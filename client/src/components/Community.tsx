@@ -1,21 +1,25 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { RecipeServings } from "./RecipeServings";
 import { Viewers } from "./Viewers";
 
 export const Community = ({item}: any) => {
-
+    // console.log(item?.viewers?.data?.attributes?.image?.data?.attributes?.url);
+    // console.log(item?.viewers?.data);
 
     return (
         <View style={styles.container}>
             {/*Left Container*/}
             <View style={styles.recipeContainer}>
                 <Text style={styles.recipeTitle}>{item.name}</Text>
-                <Text style={styles.recipeDesc}>{item.duration} | {item.serving} Serving</Text>
+                <Text style={styles.recipeDesc}>
+                    <RecipeServings duration={item.duration} serving={item.serving}/>
+                </Text>
             </View>
 
             {/*Right Container*/}
             <View style={styles.viewerContainer}>
-                <Viewers viewers={item.viewers}/>
+                <Viewers viewers={item?.viewers?.data}/>
             </View>
         </View>
     );

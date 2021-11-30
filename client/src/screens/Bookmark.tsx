@@ -2,14 +2,14 @@ import React from "react";
 import { FlatList, View } from "react-native";
 import { HeaderTitle } from "../components/HeaderTitle";
 import { CategoryCard } from "../components/CategoryCard";
-import { data } from "../assets/data";
+import { dummyData } from "../assets/dummyData";
 
 export const Bookmark = ({navigation}: any) => {
     return (
         <View>
             <HeaderTitle title={"Bookmark"}/>
             <FlatList
-                data={data}
+                data={dummyData}
                 keyExtractor={item => `${item.id}`}
                 renderItem={({item}) => {
                     if (item.isBookmark) return (
