@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "viewers",
+  "info": {
+    "singularName": "viewer",
+    "pluralName": "viewers",
+    "displayName": "viewer"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "image": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}
