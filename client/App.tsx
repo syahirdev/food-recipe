@@ -13,13 +13,13 @@ const Stack = createStackNavigator();
 const client = new ApolloClient({
     uri: env.GRAPHQL_URL,
     cache: new InMemoryCache()
-})
+});
 
 const App = () => {
     return (
         <ApolloProvider client={client}>
             <NavigationContainer>
-                <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName={"Home"}>
+                <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName={"Login"}>
                     <Stack.Screen name={"Login"} component={Login}/>
                     <Stack.Screen name={"Home"} component={Tabs}/>
                     <Stack.Screen name={"Recipe"} component={Recipe}/>
