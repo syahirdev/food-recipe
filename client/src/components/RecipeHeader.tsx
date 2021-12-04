@@ -16,7 +16,7 @@ export const RecipeHeader = ({navigation, item, loading, error}: any) => {
         <>
             <View style={styles.headerContainer}>
                 <Image
-                    source={{uri: env.BASE_URL + item?.image?.data?.attributes?.url}}
+                    source={{uri: env.BASE_URL + item?.image?.url}}
                     resizeMode={"cover"}
                     style={styles.headerImg}
                 />
@@ -25,13 +25,13 @@ export const RecipeHeader = ({navigation, item, loading, error}: any) => {
                     <View style={styles.creatorWrapper}>
                         <Image
                             style={styles.creatorImg}
-                            source={{uri: env.BASE_URL + item?.author?.data?.attributes?.image?.data?.attributes?.url}}
+                            source={{uri: env.BASE_URL + item?.author?.image?.url}}
                         />
                     </View>
 
                     <View style={styles.labelContainer}>
                         <Text style={styles.labelTitle}>Recipe by:</Text>
-                        <Text style={styles.labelName}>{item?.author?.data?.attributes?.name}</Text>
+                        <Text style={styles.labelName}>{item?.author?.name}</Text>
                     </View>
 
                     <TouchableOpacity style={styles.buttonContainer}>

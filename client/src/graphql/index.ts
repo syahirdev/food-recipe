@@ -7,7 +7,7 @@ export const GET_ALL_RECIPES = gql`
     name
     duration
     serving
-    isBookmark
+    isBookmark @client
     image {
       url
     }
@@ -88,5 +88,16 @@ mutation SingleUpload(
     name
   }
 }
+`;
 
+export const SET_BOOKMARK = gql`
+mutation SetBookmark($recipeId: ID!) {
+    setBookmark(recipeId: $recipeId) @client
+}
+`;
+
+export const BOOKMARK_FRAGMENT = gql`
+fragment BookmarkFragment on Recipe {
+    isBookmark
+}
 `;

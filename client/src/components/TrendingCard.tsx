@@ -7,8 +7,16 @@ import Icon from "react-native-vector-icons/Feather";
 import { COLORS, SIZE } from "../constants";
 import { env } from "../config";
 import { RecipeServings } from "./RecipeServings";
+import { BookmarkIcon } from "./BookmarkIcon";
+import { useMutation } from "@apollo/client";
+import { SET_BOOKMARK } from "../graphql";
 
 export const TrendingCard = ({item, onPress}: any) => {
+    const [setBookmark] = useMutation(SET_BOOKMARK, {
+        variables: {
+            recipeId: item.id,
+        }
+    })
 
     return (
         <TouchableOpacity onPress={onPress} style={styles.container}>
@@ -24,11 +32,12 @@ export const TrendingCard = ({item, onPress}: any) => {
             <View style={styles.footer}>
                 <View style={styles.footerWrapper}>
                     <Text style={styles.footerTitle}>{item.name}</Text>
-                    <FAIcon
-                        name={item.isBookmark ? "bookmark" : "bookmark-o"}
+                    <BookmarkIcon
+                        isBookmark={item.isBookmark}
                         style={styles.bookmarkIcon}
-                        size={20}
-                        color={COLORS.green}/>
+                        onPress={async() => {
+                            await setBookmark();
+                        }}/>
                 </View>
                 <Text style={styles.footerText}>
                     <RecipeServings duration={item.duration} serving={item.serving}/>

@@ -16,7 +16,7 @@ export const Viewers = ({viewers}: any) => {
                     {viewers?.map((viewer: any, index: number) => (
                         <View>
                             <Image
-                                source={{uri: env.BASE_URL + viewer.attributes.image.data.attributes.url}}
+                                source={{uri: env.BASE_URL + viewer.image.url}}
                                 style={[styles.profilePic, {
                                     marginLeft: index === 0 ? 0 : -15
                                 }]}
@@ -38,7 +38,7 @@ export const Viewers = ({viewers}: any) => {
                             return (
                                 <View>
                                     <Image
-                                        source={{uri: env.BASE_URL + viewer.attributes.image.data.attributes.url}}
+                                        source={{uri: env.BASE_URL + viewer.image.url}}
                                         style={[styles.profilePic, {
                                             marginLeft: index === 0 ? 0 : -15
                                         }]}

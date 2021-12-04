@@ -13,7 +13,9 @@ import { TrendingContainer } from "../components/TrendingContainer";
 import { CategoryContainer } from "../components/CategoryContainer";
 
 export const Home = ({navigation}: any) => {
-    const {data, loading, error} = useQuery(GET_ALL_RECIPES);
+    const {data, loading, error} = useQuery(GET_ALL_RECIPES, {
+        fetchPolicy: "cache-and-network"
+    });
 
     if (loading) return <Loading/>;
     if (error) return <Error error={error}/>;

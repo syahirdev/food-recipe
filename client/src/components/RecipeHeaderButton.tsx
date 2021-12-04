@@ -4,8 +4,17 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import FeatherIcon from "react-native-vector-icons/Feather";
 // @ts-ignore
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
+import { BookmarkIcon } from "./BookmarkIcon";
+import { useMutation } from "@apollo/client";
+import { SET_BOOKMARK } from "../graphql";
 
 export const RecipeHeaderButton = ({navigation, item}: any) => {
+    const [setBookmark] = useMutation(SET_BOOKMARK, {
+        variables: {
+            recipeId: item.id
+        }
+    });
+
     return (
         <View style={styles.headerButtonContainer}>
             <TouchableOpacity
@@ -16,12 +25,11 @@ export const RecipeHeaderButton = ({navigation, item}: any) => {
                     color={"rgba(165,165,165,0.7)"}
                     size={23}/>
             </TouchableOpacity>
-            <TouchableOpacity>
-                <FontAwesomeIcon
-                    name={item?.isBookmark ? "bookmark" : "bookmark-o"}
-                    color={"#40916c"}
-                    size={30}/>
-            </TouchableOpacity>
+            <BookmarkIcon
+                isBookmark={item.isBookmark}
+                onPress={async () => {
+                    await setBookmark();
+                }}/>
         </View>
     );
 };

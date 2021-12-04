@@ -40,7 +40,7 @@ export const Recipe = ({navigation, route}: any) => {
     return (
         <View>
             <Animated.FlatList
-                data={item?.ingredients?.data}
+                data={item?.ingredients}
                 keyExtractor={item => `${item?.id}`}
                 showsVerticalScrollIndicator={false}
                 ListHeaderComponent={
@@ -50,7 +50,7 @@ export const Recipe = ({navigation, route}: any) => {
                             item={item}
                         />
                         <Community item={item}/>
-                        <IngredientHeader totalItem={item?.ingredients?.data?.length}/>
+                        <IngredientHeader totalItem={item?.ingredients?.length}/>
                     </>
                 }
                 scrollEventThrottle={16}
@@ -59,7 +59,7 @@ export const Recipe = ({navigation, route}: any) => {
                 ], {useNativeDriver: true})}
                 renderItem={({item}) => (
                     <>
-                        <IngredientCard item={item?.attributes}/>
+                        <IngredientCard item={item}/>
                     </>
                 )}
                 ListFooterComponent={

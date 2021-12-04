@@ -4,8 +4,6 @@ import { RecipeServings } from "./RecipeServings";
 import { Viewers } from "./Viewers";
 
 export const Community = ({item}: any) => {
-    // console.log(item?.viewers?.data?.attributes?.image?.data?.attributes?.url);
-    // console.log(item?.viewers?.data);
 
     return (
         <View style={styles.container}>
@@ -19,7 +17,7 @@ export const Community = ({item}: any) => {
 
             {/*Right Container*/}
             <View style={styles.viewerContainer}>
-                <Viewers viewers={item?.viewers?.data}/>
+                <Viewers viewers={item?.viewers}/>
             </View>
         </View>
     );

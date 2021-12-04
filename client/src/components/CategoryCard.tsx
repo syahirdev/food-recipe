@@ -7,8 +7,17 @@ import Icon from "react-native-vector-icons/Feather";
 import FAIcon from "react-native-vector-icons/FontAwesome";
 import { RecipeServings } from "./RecipeServings";
 import { env } from "../config";
+import { BookmarkIcon } from "./BookmarkIcon";
+import { useMutation } from "@apollo/client";
+import { SET_BOOKMARK } from "../graphql";
 
 export const CategoryCard = ({item, onPress}: any) => {
+    const [setBookmark] = useMutation(SET_BOOKMARK, {
+        variables: {
+            recipeId: item.id,
+        }
+    })
+
     return (
         <TouchableOpacity style={styles.container} onPress={onPress}>
             {/*Image*/}
@@ -24,9 +33,12 @@ export const CategoryCard = ({item, onPress}: any) => {
                     <RecipeServings duration={item.duration} serving={item.serving}/>
                 </Text>
             </View>
-            <View style={styles.bookmark}>
-                <FAIcon name={item.isBookmark ? "bookmark" : "bookmark-o"} size={20} color={COLORS.green}/>
-            </View>
+            <BookmarkIcon
+                isBookmark={item.isBookmark}
+                style={styles.bookmark}
+                onPress={async () => {
+                    await setBookmark();
+                }}/>
         </TouchableOpacity>
     );
 };
@@ -54,7 +66,7 @@ const styles = StyleSheet.create({
         borderRadius: 15
     },
     body: {
-        width: "70%",
+        width: "60%",
         paddingHorizontal: 20
     },
     bodyText: {
@@ -69,7 +81,7 @@ const styles = StyleSheet.create({
     },
     bookmark: {
         alignSelf: "flex-start",
-        left: -15,
+        right: -15,
         top: 5
     }
 });

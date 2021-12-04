@@ -9,7 +9,9 @@ import { Loading } from "../components/Loading";
 import { Error } from "../components/Error";
 
 export const Search = ({navigation}: any) => {
-    const {data, loading, error} = useQuery(GET_ALL_RECIPES);
+    const {data, loading, error} = useQuery(GET_ALL_RECIPES, {
+        fetchPolicy: "cache-and-network"
+    });
     const [itemList, setItemList] = useState(data.recipes);
     const [filteredItemList, setFilteredItemList] = useState(null);
 
@@ -47,6 +49,7 @@ export const Search = ({navigation}: any) => {
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         marginTop: SIZE.sm
     }
 });
