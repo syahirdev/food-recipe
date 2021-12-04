@@ -17,15 +17,15 @@ export const Bookmark = ({navigation}: any) => {
         <View>
             <HeaderTitle title={"Bookmark"}/>
             <FlatList
-                data={data.recipes.data}
+                data={data.recipes}
                 keyExtractor={item => `${item.id}`}
                 renderItem={({item}) => {
-                    if (item.attributes.isBookmark) return (
+                    return item.isBookmark ? (
                         <CategoryCard
-                            item={item.attributes}
-                            onPress={() => navigation.navigate("Recipe", {recipe: item.attributes})}
+                            item={item}
+                            onPress={() => navigation.navigate("Recipe", {recipe: item})}
                         />
-                    );
+                    ) : null;
                 }}
                 ListFooterComponent={
                     <View style={{marginBottom: 50}}/>

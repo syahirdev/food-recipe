@@ -10,11 +10,11 @@ import { Error } from "../components/Error";
 
 export const Search = ({navigation}: any) => {
     const {data, loading, error} = useQuery(GET_ALL_RECIPES);
-    const [itemList, setItemList] = useState(data.recipes.data);
+    const [itemList, setItemList] = useState(data.recipes);
     const [filteredItemList, setFilteredItemList] = useState(null);
 
     const HandleSearch = (e: string) => {
-        const filteredData = itemList.filter(item => item.attributes.name.toLowerCase().indexOf(e.toLowerCase()) !== -1);
+        const filteredData = itemList.filter((item: any) => item.name.toLowerCase().indexOf(e.toLowerCase()) !== -1);
         if (filteredData) { // @ts-ignore
             setFilteredItemList(filteredData);
         }
@@ -31,8 +31,8 @@ export const Search = ({navigation}: any) => {
                 keyExtractor={item => `${item.id}`}
                 renderItem={({item}) => (
                     <CategoryCard
-                        item={item.attributes}
-                        onPress={() => navigation.navigate("Recipe", {recipe: item.attributes})}
+                        item={item}
+                        onPress={() => navigation.navigate("Recipe", {recipe: item})}
                     />
                 )}
                 ListFooterComponent={

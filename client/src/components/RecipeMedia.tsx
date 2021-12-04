@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         marginVertical: SIZE.md
     },
     mediaContainer: {
-        height: 150,
+        height: 200,
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",

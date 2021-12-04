@@ -5,15 +5,15 @@ import { COLORS, SIZE } from "../constants";
 import Icon from "react-native-vector-icons/Feather";
 // @ts-ignore
 import FAIcon from "react-native-vector-icons/FontAwesome";
-import { env } from "../config";
 import { RecipeServings } from "./RecipeServings";
+import { env } from "../config";
 
 export const CategoryCard = ({item, onPress}: any) => {
     return (
         <TouchableOpacity style={styles.container} onPress={onPress}>
             {/*Image*/}
             <Image
-                source={{uri: env.BASE_URL + item.image.data.attributes.url}}
+                source={{uri: env.BASE_URL + item.image.url}}
                 resizeMode={"cover"}
                 style={styles.image}
             />

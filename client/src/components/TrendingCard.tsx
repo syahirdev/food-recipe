@@ -14,11 +14,11 @@ export const TrendingCard = ({item, onPress}: any) => {
         <TouchableOpacity onPress={onPress} style={styles.container}>
             <Image
                 resizeMode={"cover"}
-                source={{uri: env.BASE_URL + item.image.data.attributes.url}}
+                source={{uri: env.BASE_URL + item.image.url}}
                 style={styles.image}/>
 
             <View style={styles.body}>
-                <Text style={styles.bodyText}>{item.category}</Text>
+                <Text style={styles.bodyText}>{item.category.name}</Text>
             </View>
 
             <View style={styles.footer}>

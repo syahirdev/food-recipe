@@ -17,14 +17,14 @@ export const TrendingContainer = ({navigation}: any) => {
         <View style={styles.container}>
             <Text style={styles.trendingTitle}>Trending Recipe</Text>
             <FlatList
-                data={data.recipes.data}
+                data={data.recipes}
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 keyExtractor={item => `${item.id}`}
                 renderItem={({item}) => (
                     <TrendingCard
-                        item={item.attributes}
-                        onPress={() => navigation.navigate("Recipe", {recipe: item.attributes})}
+                        item={item}
+                        onPress={() => navigation.navigate("Recipe", {recipe: item})}
                     />
                 )}
             />

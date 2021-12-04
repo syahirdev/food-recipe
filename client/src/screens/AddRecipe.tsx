@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { COLORS, SIZE } from "../constants";
 // @ts-ignore
 import Icon from "react-native-vector-icons/Feather";
@@ -8,10 +8,14 @@ import { AddIngredientButton } from "../components/AddIngredientButton";
 import { RecipeMedia } from "../components/RecipeMedia";
 import { launchImageLibrary } from "react-native-image-picker";
 
+interface ingredientListProps {
+    name: string,
+    amount: string
+}
+
 export const AddRecipe = ({navigation}: any) => {
-    const [ingredientList, setIngredientList] = useState([
-        {name: "", amount: ""},
-        {name: "", amount: ""},
+    const [title, setTitle] = useState<string>("");
+    const [ingredientList, setIngredientList] = useState<Array<ingredientListProps>>([
         {name: "", amount: ""}
     ]);
     const [document, setDocument] = useState();
@@ -57,8 +61,14 @@ export const AddRecipe = ({navigation}: any) => {
     };
 
     const HandleCancel = () => {
-        setDocument(null);
-    }
+        setDocument(undefined);
+    };
+
+    const HandleSubmit = () => {
+        console.log(title);
+        console.log(ingredientList);
+        console.log(document);
+    };
 
     return (
         <ScrollView style={styles.container}>
@@ -70,6 +80,8 @@ export const AddRecipe = ({navigation}: any) => {
             <View style={styles.subContainer}>
                 <Text style={styles.subtitle}>Title</Text>
                 <TextInput
+                    value={title}
+                    onChangeText={(e: string) => setTitle(e)}
                     style={styles.titleInput}
                     placeholder={"Write a title"}/>
             </View>
@@ -79,6 +91,7 @@ export const AddRecipe = ({navigation}: any) => {
                 {ingredientList.map((item, index) => {
                     return (
                         <IngredientContainer
+                            key={index}
                             onChangeText={HandleChange}
                             onPress={HandleRemove}
                             item={item}
@@ -90,6 +103,11 @@ export const AddRecipe = ({navigation}: any) => {
 
                 <Text style={styles.subtitle}>Add Media</Text>
                 <RecipeMedia onPress={HandleUpload} onPressCancel={HandleCancel} document={document}/>
+
+                <TouchableOpacity style={styles.addButton} onPress={HandleSubmit}>
+                    <Icon name={"plus"} style={styles.buttonText}/>
+                    <Text style={styles.buttonText}>Add New Recipe!</Text>
+                </TouchableOpacity>
             </View>
         </ScrollView>
     );
@@ -124,5 +142,20 @@ const styles = StyleSheet.create({
     mediaImg: {
         width: 50,
         height: 50
+    },
+    addButton: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: COLORS.green,
+        padding: 12,
+        borderRadius: 10
+    },
+    buttonText: {
+        marginHorizontal: 5,
+        textAlign: "center",
+        fontWeight: "500",
+        color: COLORS.light
     }
 });

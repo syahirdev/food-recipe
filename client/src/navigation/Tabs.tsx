@@ -5,6 +5,7 @@ import { TabIcon } from "../components/TabIcon";
 import { Search } from "../screens/Search";
 import { Bookmark } from "../screens/Bookmark";
 import { AddRecipe } from "../screens/AddRecipe";
+import { User } from "../screens/User";
 
 const Tab = createBottomTabNavigator();
 
@@ -65,7 +66,7 @@ export const Tabs = () => {
             />
             <Tab.Screen
                 name={"Settings"}
-                component={Home}
+                component={User}
                 options={{
                     headerShown: false,
                     tabBarIcon: ({focused}) => (
