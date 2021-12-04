@@ -1,11 +1,11 @@
 import React from "react";
 import { FlatList, View } from "react-native";
-import { HeaderTitle } from "../components/HeaderTitle";
 import { CategoryCard } from "../components/CategoryCard";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_RECIPES } from "../graphql";
 import { Loading } from "../components/Loading";
 import { Error } from "../components/Error";
+import { BookmarkTitle } from "../components/BookmarkTitle";
 
 export const Bookmark = ({navigation}: any) => {
     const {data, loading, error} = useQuery(GET_ALL_RECIPES);
@@ -15,7 +15,7 @@ export const Bookmark = ({navigation}: any) => {
 
     return (
         <View>
-            <HeaderTitle title={"Bookmark"}/>
+            <BookmarkTitle/>
             <FlatList
                 data={data.recipes}
                 keyExtractor={item => `${item.id}`}
@@ -36,3 +36,4 @@ export const Bookmark = ({navigation}: any) => {
         </View>
     );
 };
+

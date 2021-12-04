@@ -11,7 +11,6 @@ export const SearchContainer = ({HandleSearch}: any) => {
         <View style={styles.search}>
             <Icon name={"search"} size={20}/>
             <TextInput
-                autoFocus
                 style={styles.searchInput}
                 placeholder={"Search Recipes"}
                 placeholderTextColor={"gray"}

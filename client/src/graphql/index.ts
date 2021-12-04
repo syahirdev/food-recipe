@@ -101,3 +101,9 @@ fragment BookmarkFragment on Recipe {
     isBookmark
 }
 `;
+
+export const GET_BOOKMARK_COUNT = gql`
+{
+    bookmarkCounter @client
+}
+`;

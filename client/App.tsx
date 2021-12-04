@@ -8,47 +8,15 @@ import { Tabs } from "./src/navigation/Tabs";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { env } from "./src/config";
 import { BOOKMARK_FRAGMENT } from "./src/graphql";
+import { cache } from "./src/graphql/cache";
+import { resolver } from "./src/graphql/resolver";
 
 const Stack = createStackNavigator();
 
 const client = new ApolloClient({
     uri: env.GRAPHQL_URL,
-    cache: new InMemoryCache({
-        typePolicies: {
-            Recipe: {
-                fields: {
-                    isBookmark: {
-                        read(isBookmark = true) {
-                            return isBookmark;
-                        }
-                    }
-                }
-            }
-        }
-    }),
-    resolvers: {
-        Mutation: {
-            setBookmark(_root, args, {client, cache}) {
-                const recipeId = cache.identify({
-                    __typename: "Recipe",
-                    id: args.recipeId
-                });
-
-                const {isBookmark} = client.readFragment({
-                    fragment: BOOKMARK_FRAGMENT,
-                    id: recipeId
-                });
-
-                client.writeFragment({
-                    fragment: BOOKMARK_FRAGMENT,
-                    id: recipeId,
-                    data: {
-                        isBookmark: !isBookmark
-                    }
-                });
-            }
-        }
-    }
+    cache: cache,
+    resolvers: resolver
 });
 
 const App = () => {
