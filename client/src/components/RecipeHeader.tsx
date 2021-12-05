@@ -6,6 +6,7 @@ import { RecipeHeaderButton } from "./RecipeHeaderButton";
 import { Loading } from "./Loading";
 import { Error } from "./Error";
 import { env } from "../config";
+import images from "../assets/images";
 
 export const RecipeHeader = ({navigation, item, loading, error}: any) => {
 
@@ -16,7 +17,7 @@ export const RecipeHeader = ({navigation, item, loading, error}: any) => {
         <>
             <View style={styles.headerContainer}>
                 <Image
-                    source={{uri: env.BASE_URL + item?.image?.url}}
+                    source={item.image !== null ? {uri: env.BASE_URL + item.image.url} : images.defaultRecipe}
                     resizeMode={"cover"}
                     style={styles.headerImg}
                 />

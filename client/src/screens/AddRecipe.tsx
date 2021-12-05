@@ -1,12 +1,18 @@
 import React, { useState } from "react";
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { COLORS, SIZE } from "../constants";
 // @ts-ignore
 import Icon from "react-native-vector-icons/Feather";
+// @ts-ignore
+import FAIcon from "react-native-vector-icons/FontAwesome";
 import { IngredientContainer } from "../components/IngredientContainer";
 import { AddIngredientButton } from "../components/AddIngredientButton";
 import { RecipeMedia } from "../components/RecipeMedia";
 import { launchImageLibrary } from "react-native-image-picker";
+import { CREATE_INGREDIENT, CREATE_RECIPE, UPLOAD_IMAGE } from "../graphql";
+import { useMutation } from "@apollo/client";
+import images from "../assets/images";
+
 
 interface ingredientListProps {
     name: string,
@@ -14,11 +20,34 @@ interface ingredientListProps {
 }
 
 export const AddRecipe = ({navigation}: any) => {
-    const [title, setTitle] = useState<string>("");
+    const [error, setError] = useState<string>("");
+    const [modalVisible, setModalVisible] = useState<boolean>(false);
+    const [title, setTitle] = useState<string>();
+    const [duration, setDuration] = useState<string>();
+    const [serving, setServing] = useState<string>();
     const [ingredientList, setIngredientList] = useState<Array<ingredientListProps>>([
         {name: "", amount: ""}
     ]);
     const [document, setDocument] = useState();
+
+    const [createIngredient] = useMutation(CREATE_INGREDIENT);
+    const [createRecipe] = useMutation(CREATE_RECIPE, {
+        update(cache, {data}) {
+            // const { recipe } = data.createRecipe;
+            //
+            // const recipes = cache.readQuery({
+            //     query: GET_ALL_RECIPES,
+            // })
+            //
+            // cache.writeQuery({
+            //     query: GET_ALL_RECIPES,
+            //     data: {
+            //         recipes: [recipes]
+            //     }
+            // })
+        }
+    });
+    const [upload] = useMutation(UPLOAD_IMAGE);
 
     const HandleChange = (name: string, value: string, index: number) => {
         const list = [...ingredientList];
@@ -47,6 +76,7 @@ export const AddRecipe = ({navigation}: any) => {
                 path: "images"
             }
         };
+        // @ts-ignore
         launchImageLibrary(options, (response) => {
             console.log("Response = ", response);
 
@@ -55,6 +85,7 @@ export const AddRecipe = ({navigation}: any) => {
             } else if (response.errorMessage) {
                 console.log("ImagePicker Error: ", response.errorMessage);
             } else {
+                // @ts-ignore
                 setDocument(response.assets[0]);
             }
         });
@@ -64,14 +95,98 @@ export const AddRecipe = ({navigation}: any) => {
         setDocument(undefined);
     };
 
-    const HandleSubmit = () => {
-        console.log(title);
-        console.log(ingredientList);
-        console.log(document);
+    const HandleSubmit = async () => {
+        let ingredientId: number[] = [];
+        if (!title) {
+            setError("Title is required!");
+            setModalVisible(true);
+        } else if (!duration) {
+            setError("Duration is required!");
+            setModalVisible(true);
+        } else if (!serving) {
+            setError("Serving is required!");
+            setModalVisible(true);
+        } else {
+            const requests = await ingredientList.map(async ingredient => {
+                const ingredientData = await createIngredient({
+                    variables: {
+                        name: ingredient.name,
+                        quantity: ingredient.amount
+                    }
+                });
+
+                ingredientId.push(parseInt(ingredientData.data.createIngredient.ingredient.id));
+                console.log(ingredientData.data.createIngredient.ingredient.id);
+                console.log(ingredientId);
+            });
+
+            Promise.all(requests).then(async () => {
+                const recipeData = await createRecipe({
+                    variables: {
+                        name: title,
+                        duration: parseInt(duration),
+                        serving: parseInt(serving),
+                        category: 1,
+                        ingredients: ingredientId,
+                        author: 5
+                    }
+                });
+
+                console.log(recipeData.data.createRecipe.recipe.id);
+                navigation.navigate("Home");
+            });
+        }
+
+        // const uploadData = await upload({
+        //     variables: {
+        //         refId: 3,
+        //         ref: "recipe",
+        //         field: "image",
+        //         file: document
+        //     }
+        // });
+        // console.log(uploadData);
+    };
+
+    const ModalView = ({text}: any) => {
+        return (
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                    Alert.alert("Modal has been closed.");
+                    setModalVisible(!modalVisible);
+                }}
+            >
+                <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                        <Text style={styles.modalText}>{text || "Undefined"}</Text>
+                        <Pressable
+                            style={[styles.button, styles.buttonClose]}
+                            onPress={() => setModalVisible(!modalVisible)}
+                        >
+                            <View style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "center"
+                            }}>
+                                <FAIcon name={"close"} style={{
+                                    color: "white",
+                                    marginRight: 5
+                                }}/>
+                                <Text style={styles.textStyle}>Close</Text>
+                            </View>
+                        </Pressable>
+                    </View>
+                </View>
+            </Modal>
+        );
     };
 
     return (
         <ScrollView style={styles.container}>
+            <ModalView text={error}/>
             <View style={styles.headerContainer}>
                 <Text style={styles.header}>Add New Recipe</Text>
                 <Text style={styles.subHeader}>Share your cooking recipe today!</Text>
@@ -84,6 +199,47 @@ export const AddRecipe = ({navigation}: any) => {
                     onChangeText={(e: string) => setTitle(e)}
                     style={styles.titleInput}
                     placeholder={"Write a title"}/>
+            </View>
+
+            <View style={[styles.subContainer, styles.rowContainer]}>
+                <View>
+                    <Text style={styles.subtitle}>Duration</Text>
+                    <View style={styles.subInputContainer}>
+                        <TextInput
+                            value={duration}
+                            keyboardType="numeric"
+                            onChangeText={(e: string) => {
+                                const re = /^[0-9\b]+$/;
+                                if (e === "" || re.test(e)) {
+                                    setDuration(e);
+                                }
+                            }}
+                            style={styles.subInput}/>
+                        <Text style={{
+                            marginHorizontal: SIZE.md,
+                            color: duration ? COLORS.green : COLORS.lightGray
+                        }}>mins</Text>
+                    </View>
+                </View>
+                <View style={{marginHorizontal: SIZE.xxl}}>
+                    <Text style={styles.subtitle}>Serving</Text>
+                    <View style={styles.subInputContainer}>
+                        <TextInput
+                            value={serving}
+                            keyboardType="numeric"
+                            onChangeText={(e: string) => {
+                                const re = /^[0-9\b]+$/;
+                                if (e === "" || re.test(e)) {
+                                    setServing(e);
+                                }
+                            }}
+                            style={styles.subInput}/>
+                        <Text style={{
+                            marginHorizontal: SIZE.md,
+                            color: serving ? COLORS.green : COLORS.lightGray
+                        }}>servings</Text>
+                    </View>
+                </View>
             </View>
 
             <View style={styles.subContainer}>
@@ -119,6 +275,9 @@ const styles = StyleSheet.create({
         marginHorizontal: SIZE.large,
         marginVertical: SIZE.md
     },
+    rowContainer: {
+        flexDirection: "row"
+    },
     headerContainer: {
         marginHorizontal: SIZE.large,
         marginVertical: SIZE.xl
@@ -139,6 +298,20 @@ const styles = StyleSheet.create({
         color: COLORS.green,
         fontSize: SIZE.h2
     },
+    subInputContainer: {
+        marginTop: SIZE.md,
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    subInput: {
+        fontSize: SIZE.h3,
+        color: COLORS.green,
+        backgroundColor: COLORS.lighterGreen,
+        borderRadius: 10,
+        paddingHorizontal: SIZE.xxl
+        // marginTop: SIZE.md
+    },
     mediaImg: {
         width: 50,
         height: 50
@@ -157,5 +330,46 @@ const styles = StyleSheet.create({
         textAlign: "center",
         fontWeight: "500",
         color: COLORS.light
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22
+    },
+    modalView: {
+        margin: 10,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 30,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+    },
+    button: {
+        borderRadius: 10,
+        padding: 10,
+        elevation: 2
+    },
+    buttonOpen: {
+        backgroundColor: "#F194FF"
+    },
+    buttonClose: {
+        backgroundColor: COLORS.red
+    },
+    textStyle: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center"
+    },
+    modalText: {
+        marginBottom: 15,
+        textAlign: "center"
     }
 });

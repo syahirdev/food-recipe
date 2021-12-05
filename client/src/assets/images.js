@@ -1,5 +1,6 @@
 const loginBackground = require('./images/system/login-background.png');
 
+const defaultRecipe = require('./images/recipes/default.jpg')
 const recipe = require('./images/recipes/recipe.png');
 const spagetti = require('./images/recipes/spagetti.png');
 const satay = require('./images/recipes/satay.png');
@@ -19,6 +20,7 @@ const UserProfile9 = require('./images/dummy_profiles/profile-pic-9.png');
 const UserProfile10 = require('./images/dummy_profiles/profile-pic-10.png');
 
 export default {
+    defaultRecipe,
     loginBackground,
     profile,
     recipe,

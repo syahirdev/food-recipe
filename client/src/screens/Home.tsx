@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { FlatList, SafeAreaView, StyleSheet, View } from "react-native";
 import { CategoryCard } from "../components/CategoryCard";
 // @ts-ignore
 import Icon from "react-native-vector-icons/Feather";

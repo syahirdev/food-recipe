@@ -51,7 +51,6 @@ mutation CreateRecipe(
   $name: String!,
   $duration: Int!,
   $serving: Int!,
-  $image: ID!,
   $category: ID!,
   $ingredients: [ID]!,
   $author: ID!
@@ -60,7 +59,6 @@ mutation CreateRecipe(
     name: $name,
     duration: $duration,
     serving: $serving
-    image: $image,
     category: $category
     ingredients : $ingredients
     author: $author

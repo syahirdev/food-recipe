@@ -10,19 +10,20 @@ import { RecipeServings } from "./RecipeServings";
 import { BookmarkIcon } from "./BookmarkIcon";
 import { useMutation } from "@apollo/client";
 import { SET_BOOKMARK } from "../graphql";
+import images from "../assets/images";
 
 export const TrendingCard = ({item, onPress}: any) => {
     const [setBookmark] = useMutation(SET_BOOKMARK, {
         variables: {
-            recipeId: item.id,
+            recipeId: item.id
         }
-    })
+    });
 
     return (
         <TouchableOpacity onPress={onPress} style={styles.container}>
             <Image
                 resizeMode={"cover"}
-                source={{uri: env.BASE_URL + item.image.url}}
+                source={item.image !== null ? {uri: env.BASE_URL + item.image.url} : images.defaultRecipe}
                 style={styles.image}/>
 
             <View style={styles.body}>
@@ -35,7 +36,7 @@ export const TrendingCard = ({item, onPress}: any) => {
                     <BookmarkIcon
                         isBookmark={item.isBookmark}
                         style={styles.bookmarkIcon}
-                        onPress={async() => {
+                        onPress={async () => {
                             await setBookmark();
                         }}/>
                 </View>
