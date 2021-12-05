@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { COLORS, SIZE } from "../constants";
 // @ts-ignore
@@ -9,9 +9,12 @@ import { IngredientContainer } from "../components/IngredientContainer";
 import { AddIngredientButton } from "../components/AddIngredientButton";
 import { RecipeMedia } from "../components/RecipeMedia";
 import { launchImageLibrary } from "react-native-image-picker";
-import { CREATE_INGREDIENT, CREATE_RECIPE, UPLOAD_IMAGE } from "../graphql";
-import { useMutation } from "@apollo/client";
+import { CREATE_INGREDIENT, CREATE_RECIPE, GET_CATEGORIES, UPLOAD_IMAGE } from "../graphql";
+import { useMutation, useQuery } from "@apollo/client";
 import images from "../assets/images";
+import { Loading } from "../components/Loading";
+import { Error } from "../components/Error";
+import { Dropdown } from "sharingan-rn-modal-dropdown";
 
 
 interface ingredientListProps {
@@ -19,8 +22,13 @@ interface ingredientListProps {
     amount: string
 }
 
+interface ListDropdownProps {
+    value: number,
+    label: string
+}
+
 export const AddRecipe = ({navigation}: any) => {
-    const [error, setError] = useState<string>("");
+    const [errorText, setErrorText] = useState<string>("");
     const [modalVisible, setModalVisible] = useState<boolean>(false);
     const [title, setTitle] = useState<string>();
     const [duration, setDuration] = useState<string>();
@@ -29,6 +37,21 @@ export const AddRecipe = ({navigation}: any) => {
         {name: "", amount: ""}
     ]);
     const [document, setDocument] = useState();
+
+
+    //  react-native-modal-dropdown
+    const [listDropdown, setListDropdown] = useState<Array<ListDropdownProps>>([]);
+    const [valueDropdown, setValueDropdown] = useState("");
+    const {data, loading, error} = useQuery(GET_CATEGORIES, {
+        fetchPolicy: "cache-and-network"
+    });
+
+    useEffect(() => {
+        data.categories.map((category: { id: number, name: string }) => {
+            console.log(listDropdown, category.id, category.name);
+            setListDropdown(listDropdown => [...listDropdown, {"value": category.id, "label": category.name}]);
+        });
+    }, [data]);
 
     const [createIngredient] = useMutation(CREATE_INGREDIENT);
     const [createRecipe] = useMutation(CREATE_RECIPE, {
@@ -98,13 +121,13 @@ export const AddRecipe = ({navigation}: any) => {
     const HandleSubmit = async () => {
         let ingredientId: number[] = [];
         if (!title) {
-            setError("Title is required!");
+            setErrorText("Title is required!");
             setModalVisible(true);
         } else if (!duration) {
-            setError("Duration is required!");
+            setErrorText("Duration is required!");
             setModalVisible(true);
         } else if (!serving) {
-            setError("Serving is required!");
+            setErrorText("Serving is required!");
             setModalVisible(true);
         } else {
             const requests = await ingredientList.map(async ingredient => {
@@ -126,7 +149,7 @@ export const AddRecipe = ({navigation}: any) => {
                         name: title,
                         duration: parseInt(duration),
                         serving: parseInt(serving),
-                        category: 1,
+                        category: valueDropdown,
                         ingredients: ingredientId,
                         author: 5
                     }
@@ -183,6 +206,9 @@ export const AddRecipe = ({navigation}: any) => {
             </Modal>
         );
     };
+
+    if (loading) return <Loading/>;
+    if (error) return <Error error={error}/>;
 
     return (
         <ScrollView style={styles.container}>
@@ -243,6 +269,19 @@ export const AddRecipe = ({navigation}: any) => {
             </View>
 
             <View style={styles.subContainer}>
+                <Text style={styles.subtitle}>Category {valueDropdown}</Text>
+                <View style={{marginTop: 10}}>
+                    <Dropdown
+                        data={listDropdown}
+                        value={valueDropdown}
+                        underlineColor="transparent"
+                        onChange={(e) => setValueDropdown(e)}
+                        primaryColor={COLORS.green}
+                        label={""}/>
+                </View>
+            </View>
+
+            <View style={styles.subContainer}>
                 <Text style={styles.subtitle}>Ingredients</Text>
                 {ingredientList.map((item, index) => {
                     return (
@@ -271,6 +310,24 @@ export const AddRecipe = ({navigation}: any) => {
 
 const styles = StyleSheet.create({
     container: {},
+    dropdown: {
+        zIndex: 10,
+        marginVertical: SIZE.md,
+        backgroundColor: COLORS.light,
+        borderRadius: SIZE.sm,
+        padding: SIZE.md,
+
+        //  box-shadow
+        elevation: 3,
+        shadowColor: COLORS.lightGray,
+        shadowOffset: {width: -5, height: 10},
+        shadowOpacity: .5,
+        shadowRadius: 3
+    },
+    dropdownStyle: {
+        paddingHorizontal: SIZE.md,
+        borderRadius: SIZE.sm
+    },
     subContainer: {
         marginHorizontal: SIZE.large,
         marginVertical: SIZE.md
