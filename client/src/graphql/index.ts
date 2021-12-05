@@ -105,3 +105,12 @@ export const GET_BOOKMARK_COUNT = gql`
     bookmarkCounter @client
 }
 `;
+
+export const GET_CATEGORIES = gql`
+{
+  categories {
+    id
+    name
+  }
+}
+`;

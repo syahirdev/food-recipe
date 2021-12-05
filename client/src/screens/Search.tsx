@@ -7,6 +7,7 @@ import { useQuery } from "@apollo/client";
 import { GET_ALL_RECIPES } from "../graphql";
 import { Loading } from "../components/Loading";
 import { Error } from "../components/Error";
+import { SearchFilter } from "../components/SearchFilter";
 
 export const Search = ({navigation}: any) => {
     const {data, loading, error} = useQuery(GET_ALL_RECIPES, {
@@ -22,12 +23,24 @@ export const Search = ({navigation}: any) => {
         }
     };
 
+    const HandleFilter = (e: number) => {
+        if (e === null) {
+            setFilteredItemList(null);
+        } else {
+            const filteredData = itemList.filter((item: any) => item.category.id.indexOf(e) !== -1);
+            if (filteredData) { // @ts-ignore
+                setFilteredItemList(filteredData);
+            }
+        }
+    };
+
     if (loading) return <Loading/>;
     if (error) return <Error error={error}/>;
 
     return (
         <View style={styles.container}>
             <SearchContainer HandleSearch={HandleSearch}/>
+            <SearchFilter onPress={HandleFilter}/>
             <FlatList
                 data={filteredItemList ? filteredItemList : itemList}
                 keyExtractor={item => `${item.id}`}

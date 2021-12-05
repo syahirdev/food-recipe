@@ -33,12 +33,13 @@ export const TrendingCard = ({item, onPress}: any) => {
             <View style={styles.footer}>
                 <View style={styles.footerWrapper}>
                     <Text style={styles.footerTitle}>{item.name}</Text>
-                    <BookmarkIcon
-                        isBookmark={item.isBookmark}
-                        style={styles.bookmarkIcon}
-                        onPress={async () => {
-                            await setBookmark();
-                        }}/>
+                    <View style={styles.bookmarkIcon}>
+                        <BookmarkIcon
+                            isBookmark={item.isBookmark}
+                            onPress={async () => {
+                                await setBookmark();
+                            }}/>
+                    </View>
                 </View>
                 <Text style={styles.footerText}>
                     <RecipeServings duration={item.duration} serving={item.serving}/>

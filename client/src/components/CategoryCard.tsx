@@ -30,16 +30,20 @@ export const CategoryCard = ({item, onPress}: any) => {
             {/*Body*/}
             <View style={styles.body}>
                 <Text style={styles.bodyText}>{item.name}</Text>
+                <View style={{alignItems: "flex-start"}}>
+                    <Text style={styles.categoryText}>{item.category.name}</Text>
+                </View>
                 <Text style={styles.bodyFooterText}>
                     <RecipeServings duration={item.duration} serving={item.serving}/>
                 </Text>
             </View>
-            <BookmarkIcon
-                isBookmark={item.isBookmark}
-                style={styles.bookmark}
-                onPress={async () => {
-                    await setBookmark();
-                }}/>
+            <View style={styles.bookmark}>
+                <BookmarkIcon
+                    isBookmark={item.isBookmark}
+                    onPress={async () => {
+                        await setBookmark();
+                    }}/>
+            </View>
         </TouchableOpacity>
     );
 };
@@ -75,6 +79,16 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: "bold",
         color: "black"
+    },
+    categoryText: {
+        paddingVertical: SIZE.sm,
+        paddingHorizontal: SIZE.md,
+        marginVertical: SIZE.sm,
+        color: COLORS.light,
+        backgroundColor: COLORS.green,
+        fontSize: SIZE.h5,
+        fontWeight: "500",
+        borderRadius: 50
     },
     bodyFooterText: {
         fontSize: 14,
