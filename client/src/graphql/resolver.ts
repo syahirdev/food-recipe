@@ -13,6 +13,7 @@ export const resolver = {
                 id: recipeId
             });
 
+
             client.writeFragment({
                 fragment: BOOKMARK_FRAGMENT,
                 id: recipeId,
@@ -24,6 +25,8 @@ export const resolver = {
             const {bookmarkCounter} = client.readQuery({
                 query: GET_BOOKMARK_COUNT
             });
+
+            console.log(bookmarkCounter);
 
             client.writeQuery({
                 query: GET_BOOKMARK_COUNT,

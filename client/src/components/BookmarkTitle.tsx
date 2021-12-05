@@ -1,23 +1,22 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { COLORS, SIZE } from "../constants";
-import { useQuery } from "@apollo/client";
-import { GET_BOOKMARK_COUNT } from "../graphql";
-import { Loading } from "./Loading";
-import { Error } from "./Error";
 
 
-export const BookmarkTitle = () => {
-    const {data, loading, error} = useQuery(GET_BOOKMARK_COUNT);
+interface BookmarkTitleProps {
+    bookmarkCount: number
+}
 
-    if (loading) return <Loading/>;
-    if (error) return <Error error={error}/>;
-    
+export const BookmarkTitle = ({bookmarkCount}: BookmarkTitleProps) => {
+    // const {data, loading, error} = useQuery(GET_BOOKMARK_COUNT);
+    // if (loading) return <Loading/>;
+    // if (error) return <Error error={error}/>;
+
     return (
         <View style={styles.container}>
             <Text style={styles.text}>Bookmark</Text>
             <View style={styles.counter}>
-                <Text style={styles.textCounter}>{data.bookmarkCounter}</Text>
+                <Text style={styles.textCounter}>{bookmarkCount}</Text>
             </View>
         </View>
     );
