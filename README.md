@@ -11,6 +11,8 @@ A food recipe app side project build with <a href="#"><img alt="React Native" sr
 
 ### Running Server
 
+1. install dependencies and run server side
+
 ```
 $ git clone https://github.com/syahirdev/food-recipe.git
 $ cd server
@@ -19,6 +21,14 @@ $ yarn install && yarn develop
 
 ### Running Client (Android)
 
+1. add .env file into the folder `food-recipe/client/.env`
+```
+BASE_URL=http://192.168.x.x (replace with your own ip address)
+```
+
+> Note: to get the ip address for windows, open cmd and insert `ipconfig`, then select ipv4 address as the base_url.
+
+2. install dependencies and run client side
 ```
 $ cd client
 $ yarn install && yarn start
